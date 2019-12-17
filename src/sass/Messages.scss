@@ -1,12 +1,41 @@
 @import './base';
 
+/////////////////////////////////
+// TITLE - ON TRASH VIEW
+/////////////////////////////////
+
+.list__title {
+  width: 100%;
+  margin: 0 auto;
+  width: 50rem;
+  text-align: center;
+  margin: 2rem auto;
+  @include title;
+}
+
+/////////////////////////////////
+// EMPTY STATE
+/////////////////////////////////
+
+.empty-box {
+  width: 50rem;
+  height: 10rem;
+  font-size: 2rem;
+  color: var(--color-blue-dark);
+  text-align: center;
+}
+
+/////////////////////////////////
+// CARD STYLES
+/////////////////////////////////
+
 .card {
   position: relative;
   width: 50rem;
   height: auto;
   padding: 2rem 3rem;
   &:not(:last-child) {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
   }
   border-radius: 5px;
   background-color: var(--color-white);
@@ -79,6 +108,10 @@
     opacity: 1;
   }
 }
+
+/////////////////////////////////
+// DISABLE HOVER ON DELETED MSGS
+/////////////////////////////////
 
 .list--deleted .card {
   pointer-events: none;

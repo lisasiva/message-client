@@ -1,101 +1,89 @@
 import React from 'react';
 import data from '../data';
-import { days, months } from '..//helpers/dates';
+import { days, months } from '../helpers/dates';
 import Nav from './Nav';
-import MessageList from './MessageList';
-import SortMenu from './SortMenu';
-import Button from './Button';
+import Messages from './Messages';
 import '../sass/base.scss';
 import '../sass/layout.scss';
 
 class App extends React.Component {
+  // Defaults to 5 most recent messages, in descending order
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
-      reversed: false,
+      order: 'descending',
       index: 5,
       deleted: [],
       view: 'inbox'
     };
   }
 
+  // Retrieves and formats messages from json file
   componentDidMount() {
     this.setState({ messages: this.formatMessages(data.messages) });
   }
 
+  // Prepares messages to be added to state
   formatMessages(messages) {
     const cache = {};
     const deDupedMessages = [];
     let key;
     data.messages.forEach(message => {
       key = message.uuid + message.content;
+      // If we have not previously seen a message with this uuid + content
       if (!cache[key]) {
+        // Update message in place
         message.messageId = key;
         message.timeStamp = this.formatDate(message.sentAt);
+        // Mark this message as previously seen
         cache[key] = true;
+        // Push into new array
         deDupedMessages.push(message);
       }
     })
+    // Default order to descending, most recent to oldest
     return deDupedMessages.sort((a, b) => (a.sentAt <  b.sentAt) ? 1 : -1);
   }
 
-  formatDate(iso) {
-    const readable = new Date(iso);
-    return `${days[readable.getDay()]}, ${months[readable.getMonth()]} ${readable.getDate()}, ${readable.getFullYear()} at ${this.formatTime(readable.getHours(), readable.getMinutes())}`;
+  // Convert ISO string to human readable date and time
+  formatDate(isoDate) {
+    const date = new Date(isoDate);
+    return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} at ${this.formatTime(date.getHours(), date.getMinutes())}`;
   }
 
+  // Convert 24-hour time to 12-hour time
   formatTime(hours, minutes) {
     return hours > 12 ? `${hours - 12}:${minutes}pm` : `${hours}:${minutes}am`;
   }
 
-  renderMessageContainer() {
-    const { messages, index, view } = this.state;
-    if (view === 'inbox') {
-      return (
-        <div className="container__messages">
-          <SortMenu onSort={this.onSort} text="Sort by:"/>
-          <MessageList
-            messages={messages.slice(0, index)}
-            onDelete={this.onDelete}
-          />
-          <Button
-            text="Show More"
-            onMoreMessages={this.onMoreMessages}
-            type={index >= messages.length ? 'button--inactive' : 'button'}
-          />
-        </div>
-      )
-    } else {
-      return (
-        <div className="container__messages">
-          <SortMenu onSort={this.onSort} text="Deleted messages:"/>
-          <MessageList
-            messages={this.state.deleted}
-            onDelete={null}
-          />
-        </div>
-      )
-    }
-  }
-
+  // When user chooses a sort order different from the current order, reverse the messages
+  // Called by SortMenu (App -> Messages -> SortMenu)
   onSort = (option) => {
-    if ((option === 'oldest' && this.state.reversed === false) || (option === 'recent' && this.state.reversed === true)) {
+    const { messages, order } = this.state;
+    if ((option === 'oldest' && order === 'descending') || (option === 'recent' && order === 'ascending')) {
       this.setState({
-        messages: this.state.messages.reverse(),
-        reversed: this.state.reversed ? false : true
+        messages: messages.reverse(),
+        order: order === 'descending' ? 'ascending' : 'descending'
       })
     }
   }
 
+  // When user clicks the "Show More" button, increase index
+  // Called by Button (App -> Messages -> Button)
   onMoreMessages = () => {
     this.setState({ index: this.state.index + 5 })
   }
 
+  // When user clicks trash icon on a message, delete that message
+  // Called by MessageCard (App -> Messages -> MessageList -> MessageCard)
   onDelete = (id) => {
     const messages = [...this.state.messages];
+    // Get index of message to be deleted
     const index = messages.findIndex(message => message.messageId === id);
+    // Delete message from messages array
     const deletedMessage = messages.splice(index, 1);
+    // Add newly deleted message to deleted array
     const deleted = [...this.state.deleted, ...deletedMessage];
     this.setState({
       messages,
@@ -104,6 +92,8 @@ class App extends React.Component {
     });
   }
 
+  // When user chooses a view different from the current view, change the view
+  // Called by NavOption (App -> Nav -> NavOption)
   onViewChange = (view) => {
     if (view !== this.state.view) {
       this.setState({ view });
@@ -111,17 +101,27 @@ class App extends React.Component {
   }
 
   render() {
+    const { messages, index, deleted, view } = this.state;
     return (
       <div className="container">
         <div className="container__nav">
           <Nav
-            view={this.state.view}
-            inboxCount={this.state.messages.length}
-            deletedCount={this.state.deleted.length}
+            view={view}
+            inboxCount={messages.length}
+            deletedCount={deleted.length}
             onViewChange={this.onViewChange}
           />
         </div>
-        {this.renderMessageContainer()}
+        <div className="container__messages">
+          <Messages
+            view={view}
+            messages={view === 'inbox' ? messages : deleted}
+            index={index}
+            onSort={this.onSort}
+            onMoreMessages={this.onMoreMessages}
+            onDelete={view === 'inbox' ? this.onDelete : null}
+          />
+        </div>
       </div>
     )
   }
