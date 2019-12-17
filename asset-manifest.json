@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/message-client/static/css/main.c2126fb0.chunk.css",
+    "main.js": "/message-client/static/js/main.94b15ac3.chunk.js",
+    "main.js.map": "/message-client/static/js/main.94b15ac3.chunk.js.map",
+    "runtime-main.js": "/message-client/static/js/runtime-main.145bc97e.js",
+    "runtime-main.js.map": "/message-client/static/js/runtime-main.145bc97e.js.map",
+    "static/js/2.d966a7d5.chunk.js": "/message-client/static/js/2.d966a7d5.chunk.js",
+    "static/js/2.d966a7d5.chunk.js.map": "/message-client/static/js/2.d966a7d5.chunk.js.map",
+    "index.html": "/message-client/index.html",
+    "precache-manifest.80539e2f3e211b3224c2af0f7533a851.js": "/message-client/precache-manifest.80539e2f3e211b3224c2af0f7533a851.js",
+    "service-worker.js": "/message-client/service-worker.js",
+    "static/css/main.c2126fb0.chunk.css.map": "/message-client/static/css/main.c2126fb0.chunk.css.map",
+    "static/js/2.d966a7d5.chunk.js.LICENSE": "/message-client/static/js/2.d966a7d5.chunk.js.LICENSE",
+    "static/media/Nav.scss": "/message-client/static/media/logo-modern-health.89bb18c1.svg",
+    "static/media/MessageList.scss": "/message-client/static/media/icon-trash.ce8e2a41.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.145bc97e.js",
+    "static/js/2.d966a7d5.chunk.js",
+    "static/css/main.c2126fb0.chunk.css",
+    "static/js/main.94b15ac3.chunk.js"
+  ]
+}
