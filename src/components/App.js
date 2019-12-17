@@ -19,7 +19,7 @@ class App extends React.Component {
     };
   }
 
-  // Retrieves and formats messages from json file
+  // Updates state with formatted messages
   componentDidMount() {
     this.setState({ messages: this.formatMessages(data.messages) });
   }
@@ -29,7 +29,7 @@ class App extends React.Component {
     const cache = {};
     const deDupedMessages = [];
     let key;
-    data.messages.forEach(message => {
+    messages.forEach(message => {
       key = message.uuid + message.content;
       // If we have not previously seen a message with this uuid + content
       if (!cache[key]) {
@@ -62,8 +62,9 @@ class App extends React.Component {
   onSort = (option) => {
     const { messages, order } = this.state;
     if ((option === 'oldest' && order === 'descending') || (option === 'recent' && order === 'ascending')) {
+      const reversedMessages = [...messages].reverse();
       this.setState({
-        messages: messages.reverse(),
+        messages: reversedMessages,
         order: order === 'descending' ? 'ascending' : 'descending'
       })
     }
@@ -72,7 +73,7 @@ class App extends React.Component {
   // When user clicks the "Show More" button, increase index
   // Called by Button (App -> Messages -> Button)
   onMoreMessages = () => {
-    this.setState({ index: this.state.index + 5 })
+    this.setState({ index: this.state.index + 5 });
   }
 
   // When user clicks trash icon on a message, delete that message

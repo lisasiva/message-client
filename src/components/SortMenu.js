@@ -14,7 +14,7 @@ class SortMenu extends React.Component {
       this.setState({ sortBy: option });
     }
     this.props.onSort(option);
-  };
+  }
 
 
   render() {
