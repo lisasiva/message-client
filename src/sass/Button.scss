@@ -1,0 +1,27 @@
+@import './base';
+
+.button,
+.button--inactive {
+  display: block;
+  width: 20rem;
+  height: 5rem;
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 10rem;
+  text-align: center;
+}
+
+.button {
+  background-color: var(--color-blue-medium);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: all .2s;
+
+  &:hover {
+    background-color: var(--color-blue-medium-2);
+  }
+}
+
+.button--inactive {
+  background-color: var(--color-gray-light-2);
+}

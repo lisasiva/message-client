@@ -1,0 +1,51 @@
+:root {
+  --color-white: #fff;
+  --color-gray-light-1: #faf9f9;
+  --color-gray-light-2: #ededf1;
+  --color-gray-medium: #969baa;
+
+  --color-blue-primary: #1890ff;
+  --color-blue-medium: #4c7de0;
+  --color-blue-medium-2: #4470c9;
+  --color-blue-dark: #1c4b81;
+  --color-blue-dark-2: #191d3a;
+}
+
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-gray-medium);
+  background-color: var(--color-gray-light-1);
+}
+
+.link--inline {
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: var(--color-blue-dark);
+    transition: all .2s;
+  }
+
+  &:hover,
+  &:active {
+    color: var(--color-blue-primary);
+  }
+}

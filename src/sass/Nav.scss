@@ -1,0 +1,82 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 3.5rem 8rem;
+
+  &__icon-box {
+    flex: 0 0 33%;
+  }
+
+  &__icon {
+    height: 5rem;
+    background-image: url(../img/logo-modern-health.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  &__footer {
+    margin-top: auto;
+    font-weight: 300;
+  }
+
+}
+
+.nav__option {
+  display: flex;
+  align-items: center;
+  color: var(--color-gray-medium);
+  cursor: pointer;
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+  transition: all .2s;
+
+  &:hover,
+  &.active {
+    color: var(--color-blue-primary);
+  }
+
+  .option__icon {
+    height: 3rem;
+    width: 3rem;
+    background-color: currentColor;
+    margin-right: 1rem;
+
+    &--inbox {
+      mask: url('../img/icon-inbox.svg');
+    }
+
+    &--trash {
+      mask: url('../img/icon-trash.svg');
+    }
+
+    &--inbox,
+    &--trash {
+      mask-size: contain;
+      mask-repeat: no-repeat;
+    }
+  }
+
+  .option__name {
+    font-size: 2rem;
+    margin-right: auto;
+  }
+
+  .option__count {
+    position: relative;
+    height: 3rem;
+    width: 3rem;
+    background-color: currentColor;
+    border-radius: 50%;
+
+    & p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--color-white);
+      font-size: 1.2rem;
+    }
+  }
+}
